@@ -1,0 +1,48 @@
+type User @table {
+  displayName: String!
+  email: String!
+  role: String!
+  createdAt: Timestamp!
+  photoUrl: String
+}
+
+type Child @table {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  currentBelt: Belt!
+  parent: User!
+}
+
+type Belt @table {
+  name: String!
+  order: Int!
+  createdAt: Timestamp!
+  requirements: String
+}
+
+type Exam @table {
+  examDate: Date!
+  examTime: String!
+  location: String!
+  createdAt: Timestamp!
+  description: String
+  coach: User!
+}
+
+type ExamRegistration @table {
+  registeredAt: Timestamp!
+  status: String
+  child: Child!
+  exam: Exam!
+  belt: Belt!
+}
+
+type ExamResult @table {
+  passed: Boolean!
+  resultDate: Date!
+  notes: String
+  examRegistration: ExamRegistration!
+  child: Child!
+  belt: Belt!
+}

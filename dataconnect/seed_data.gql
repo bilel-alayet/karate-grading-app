@@ -1,0 +1,80 @@
+mutation SeedData @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") @transaction {
+  user1: user_insert(
+    data: {
+      id: "6a6f1d2c-8b7e-4a3d-9c0b-1f2e3d4c5b6a"
+      displayName: "Coach John"
+      email: "john.coach@example.com"
+      role: "Coach"
+      createdAt: "2023-01-15T10:00:00Z"
+    }
+  )
+  user2: user_insert(
+    data: {
+      id: "7b7e3d4c-9c0b-1f2e-3d4c-5b6a7f8e9d0c"
+      displayName: "Parent Mary"
+      email: "mary.parent@example.com"
+      role: "Parent"
+      createdAt: "2023-01-20T11:00:00Z"
+    }
+  )
+  belt1: belt_insert(
+    data: {
+      id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+      name: "White Belt"
+      order: 1
+      createdAt: "2022-12-01T09:00:00Z"
+      requirements: "Basic stances, blocks, and kicks."
+    }
+  )
+  belt2: belt_insert(
+    data: {
+      id: "b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e"
+      name: "Yellow Belt"
+      order: 2
+      createdAt: "2023-01-01T09:00:00Z"
+      requirements: "Advanced stances, basic forms."
+    }
+  )
+  child1: child_insert(
+    data: {
+      id: "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f"
+      firstName: "Alice"
+      lastName: "Smith"
+      dateOfBirth: "2017-05-10"
+      currentBeltId: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+      parentId: "7b7e3d4c-9c0b-1f2e-3d4c-5b6a7f8e9d0c"
+    }
+  )
+  exam1: exam_insert(
+    data: {
+      id: "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90"
+      examDate: "2023-03-01"
+      examTime: "14:00"
+      location: "Main Dojo"
+      createdAt: "2023-02-10T08:00:00Z"
+      description: "First quarter belt exam"
+      coachId: "6a6f1d2c-8b7e-4a3d-9c0b-1f2e3d4c5b6a"
+    }
+  )
+  examRegistration1: examRegistration_insert(
+    data: {
+      id: "e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f90a1"
+      registeredAt: "2023-02-15T12:00:00Z"
+      status: "Registered"
+      childId: "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f"
+      examId: "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90"
+      beltId: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+    }
+  )
+  examResult1: examResult_insert(
+    data: {
+      id: "f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2"
+      passed: true
+      resultDate: "2023-03-01"
+      notes: "Excellent performance for a white belt."
+      examRegistrationId: "e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f90a1"
+      childId: "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f"
+      beltId: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+    }
+  )
+}

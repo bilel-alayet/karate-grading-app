@@ -1,0 +1,53 @@
+# 1. Query to list all belts, accessible to the public.
+query ListAllBelts @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  belts(orderBy: [{order: ASC}]) {
+    id
+    name
+    order
+    requirements
+  }
+}
+
+# 2. Mutation for a user to register their child for an exam.
+mutation RegisterChildForExam($childId: UUID!, $examId: UUID!, $beltId: UUID!) @auth(level: USER) {
+  examRegistration_insert(
+    data: {
+      childId: $childId,
+      examId: $examId,
+      beltId: $beltId,
+      registeredAt_expr: "request.time",
+      status: "Registered"
+    }
+  )
+}
+
+# 3. Query to get a specific user's children.
+query GetMyChildren @auth(level: USER) {
+  users(where: {id: {eq_expr: "auth.uid"}}) {
+    displayName
+    children_on_parent {
+      id
+      firstName
+      lastName
+      dateOfBirth
+      currentBelt {
+        name
+        order
+      }
+    }
+  }
+}
+
+# 4. Mutation for a coach to record an exam result for a child.
+mutation RecordExamResult($examRegistrationId: UUID!, $childId: UUID!, $beltId: UUID!, $passed: Boolean!, $notes: String) @auth(expr: "auth.token.role == 'coach'") {
+  examResult_insert(
+    data: {
+      examRegistrationId: $examRegistrationId,
+      childId: $childId,
+      beltId: $beltId,
+      passed: $passed,
+      notes: $notes,
+      resultDate_expr: "request.time"
+    }
+  )
+}
